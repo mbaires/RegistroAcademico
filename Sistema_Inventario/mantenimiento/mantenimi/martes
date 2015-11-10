@@ -1,0 +1,349 @@
+-- MySQL dump 10.8
+--
+-- Host: localhost    Database: inventario_pacientes
+-- ------------------------------------------------------
+-- Server version	5.0.27-community-nt
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;
+
+--
+-- Current Database: `inventario_pacientes`
+--
+
+USE `inventario_pacientes`;
+
+--
+-- Table structure for table `citas`
+--
+
+DROP TABLE IF EXISTS `citas`;
+CREATE TABLE `citas` (
+  `id_cita` int(10) NOT NULL,
+  `id_paciente` int(10) default NULL,
+  `Asistencia` varchar(100) default NULL,
+  `Fecha_cita` varchar(10) default NULL,
+  PRIMARY KEY  (`id_cita`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `citas`
+--
+
+
+/*!40000 ALTER TABLE `citas` DISABLE KEYS */;
+LOCK TABLES `citas` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `citas` ENABLE KEYS */;
+
+--
+-- Table structure for table `compra_medicamento`
+--
+
+DROP TABLE IF EXISTS `compra_medicamento`;
+CREATE TABLE `compra_medicamento` (
+  `id_compra` int(10) NOT NULL,
+  `id_proveedor` int(10) NOT NULL,
+  `id_medicamento` int(10) default NULL,
+  `Fecha_compra` varchar(10) default NULL,
+  `Fecha_vencimiento` varchar(10) default NULL,
+  `Cantidad` int(6) NOT NULL,
+  `Precio_unitario` decimal(4,2) default NULL,
+  `Descripcion` varchar(100) default NULL,
+  `N_factura` int(10) default NULL,
+  PRIMARY KEY  (`id_compra`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `compra_medicamento`
+--
+
+
+/*!40000 ALTER TABLE `compra_medicamento` DISABLE KEYS */;
+LOCK TABLES `compra_medicamento` WRITE;
+INSERT INTO `compra_medicamento` VALUES (1,1,1,'04-01-2010','12-12-2014',10,'5.00','jarabe pa la toz',2134),(2,1,1,'04-01-2010','14-12-2014',56,'5.00','jarabe para la toz',23456);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `compra_medicamento` ENABLE KEYS */;
+
+--
+-- Table structure for table `detalle_factura`
+--
+
+DROP TABLE IF EXISTS `detalle_factura`;
+CREATE TABLE `detalle_factura` (
+  `id_detalleFactura` int(10) NOT NULL,
+  `N_factura` int(10) default NULL,
+  `id_medicamento` int(10) default NULL,
+  `Cantidad` int(10) default NULL,
+  `Precio_venta` decimal(4,2) default NULL,
+  PRIMARY KEY  (`id_detalleFactura`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detalle_factura`
+--
+
+
+/*!40000 ALTER TABLE `detalle_factura` DISABLE KEYS */;
+LOCK TABLES `detalle_factura` WRITE;
+INSERT INTO `detalle_factura` VALUES (1,3454,1,4,'6.25'),(2,2345,1,5,'6.25');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `detalle_factura` ENABLE KEYS */;
+
+--
+-- Table structure for table `examenes`
+--
+
+DROP TABLE IF EXISTS `examenes`;
+CREATE TABLE `examenes` (
+  `id_examen` int(10) NOT NULL,
+  `Nombre_examen` varchar(35) default NULL,
+  `id_paciente` int(10) default NULL,
+  `Tipo_examen` varchar(55) default NULL,
+  `Fecha_examen` varchar(10) default NULL,
+  PRIMARY KEY  (`id_examen`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `examenes`
+--
+
+
+/*!40000 ALTER TABLE `examenes` DISABLE KEYS */;
+LOCK TABLES `examenes` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `examenes` ENABLE KEYS */;
+
+--
+-- Table structure for table `expediente`
+--
+
+DROP TABLE IF EXISTS `expediente`;
+CREATE TABLE `expediente` (
+  `id_expediente` int(10) NOT NULL,
+  `id_paciente` int(10) default NULL,
+  `Tipo_expediente` varchar(55) default NULL,
+  PRIMARY KEY  (`id_expediente`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `expediente`
+--
+
+
+/*!40000 ALTER TABLE `expediente` DISABLE KEYS */;
+LOCK TABLES `expediente` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `expediente` ENABLE KEYS */;
+
+--
+-- Table structure for table `factura`
+--
+
+DROP TABLE IF EXISTS `factura`;
+CREATE TABLE `factura` (
+  `N_factura` int(10) NOT NULL,
+  `Nombre_paciente` varchar(100) default NULL,
+  `Direccion` varchar(55) default NULL,
+  `Fecha_venta` varchar(10) default NULL,
+  `Estado` varchar(10) default NULL,
+  PRIMARY KEY  (`N_factura`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `factura`
+--
+
+
+/*!40000 ALTER TABLE `factura` DISABLE KEYS */;
+LOCK TABLES `factura` WRITE;
+INSERT INTO `factura` VALUES (2345,'administrador','sn san','02-01-10','valida'),(3454,'juan jose','san miguel','02-01-10','valida');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `factura` ENABLE KEYS */;
+
+--
+-- Table structure for table `historial`
+--
+
+DROP TABLE IF EXISTS `historial`;
+CREATE TABLE `historial` (
+  `id_historial` int(10) NOT NULL,
+  `id_expediente` int(10) default NULL,
+  `id_paciente` int(10) default NULL,
+  `Fecha_consulta` varchar(10) default NULL,
+  `Observaciones` varchar(55) default NULL,
+  PRIMARY KEY  (`id_historial`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `historial`
+--
+
+
+/*!40000 ALTER TABLE `historial` DISABLE KEYS */;
+LOCK TABLES `historial` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `historial` ENABLE KEYS */;
+
+--
+-- Table structure for table `inventario`
+--
+
+DROP TABLE IF EXISTS `inventario`;
+CREATE TABLE `inventario` (
+  `id_inventario` int(10) NOT NULL,
+  `id_medicamento` int(10) NOT NULL,
+  `Precio_venta` decimal(6,2) default NULL,
+  `Existencia` int(10) default NULL,
+  PRIMARY KEY  (`id_inventario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inventario`
+--
+
+
+/*!40000 ALTER TABLE `inventario` DISABLE KEYS */;
+LOCK TABLES `inventario` WRITE;
+INSERT INTO `inventario` VALUES (1,1,'6.25',57);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `inventario` ENABLE KEYS */;
+
+--
+-- Table structure for table `medicamento`
+--
+
+DROP TABLE IF EXISTS `medicamento`;
+CREATE TABLE `medicamento` (
+  `id_medicamento` int(10) NOT NULL,
+  `Nombre` varchar(100) NOT NULL,
+  `Presentacion` varchar(100) default NULL,
+  PRIMARY KEY  (`id_medicamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `medicamento`
+--
+
+
+/*!40000 ALTER TABLE `medicamento` DISABLE KEYS */;
+LOCK TABLES `medicamento` WRITE;
+INSERT INTO `medicamento` VALUES (1,'sda','jarabe');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `medicamento` ENABLE KEYS */;
+
+--
+-- Table structure for table `paciente`
+--
+
+DROP TABLE IF EXISTS `paciente`;
+CREATE TABLE `paciente` (
+  `id_paciente` int(10) NOT NULL,
+  `Nombre_paciente` varchar(55) default NULL,
+  `Sexo` varchar(15) default NULL,
+  `Fecha_nacimiento` varchar(10) default NULL,
+  `Direccion` varchar(55) default NULL,
+  `Telefono` varchar(10) default NULL,
+  `Cargo` varchar(55) default NULL,
+  `Encargado` varchar(55) default NULL,
+  `Tel_encargado` varchar(10) default NULL,
+  PRIMARY KEY  (`id_paciente`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `paciente`
+--
+
+
+/*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
+LOCK TABLES `paciente` WRITE;
+INSERT INTO `paciente` VALUES (1,'','Masculino','12-01-2010','san miguel','2660-4606','estudiante','jose manuel',''),(2,'','Masculino','12-01-2010','san salvador','2341234','estudiante','juana',''),(3,'carlso anto','Masculino','132134','san migel','2321432','no se ','tampoco','13123');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
+
+--
+-- Table structure for table `proveedores`
+--
+
+DROP TABLE IF EXISTS `proveedores`;
+CREATE TABLE `proveedores` (
+  `codigo` varchar(10) NOT NULL,
+  `Nombre` varchar(55) NOT NULL,
+  `Direccion` varchar(55) NOT NULL,
+  `Dui` varchar(25) NOT NULL,
+  `Nit` varchar(10) NOT NULL,
+  `Telefono` varchar(10) default NULL,
+  PRIMARY KEY  (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `proveedores`
+--
+
+
+/*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
+LOCK TABLES `proveedores` WRITE;
+INSERT INTO `proveedores` VALUES ('1','Juan Carlos Peña','san miguel','21323','123123','2660-4606');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
+
+--
+-- Table structure for table `temp`
+--
+
+DROP TABLE IF EXISTS `temp`;
+CREATE TABLE `temp` (
+  `id` int(10) NOT NULL,
+  `id_medicamento` int(10) default NULL,
+  `Cantidad` int(10) default NULL,
+  `Precio_venta` decimal(4,2) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `temp`
+--
+
+
+/*!40000 ALTER TABLE `temp` DISABLE KEYS */;
+LOCK TABLES `temp` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `temp` ENABLE KEYS */;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+CREATE TABLE `usuarios` (
+  `id_usuario` int(6) NOT NULL auto_increment,
+  `Login` varchar(25) NOT NULL,
+  `Password` varchar(15) NOT NULL,
+  `DUI` varchar(15) NOT NULL,
+  `Type` varchar(25) NOT NULL,
+  PRIMARY KEY  (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usuarios`
+--
+
+
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+LOCK TABLES `usuarios` WRITE;
+INSERT INTO `usuarios` VALUES (1,'administrador','root','000001','administrador');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
